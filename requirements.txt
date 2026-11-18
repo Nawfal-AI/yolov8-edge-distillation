@@ -1,0 +1,16 @@
+# Core
+ultralytics>=8.1.0
+torch>=2.0.0
+torchvision>=0.15.0
+numpy>=1.24.0
+PyYAML>=6.0
+
+# Benchmarking
+torchmetrics>=1.0.0
+
+# ONNX export
+onnx>=1.14.0
+onnxruntime>=1.16.0
+
+# Dev / testing
+pytest>=7.0
