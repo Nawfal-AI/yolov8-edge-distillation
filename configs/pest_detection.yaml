@@ -1,33 +1,43 @@
-# Distillation config for the pest detection use case
-# (aspilanta-fewshot-detection → edge student)
+# Distillation config — pest detection (Aspilanta + eu_moth)
+# Trained on Tesla T4 GPU | 30 epochs
+#
+# Results:
+#   Teacher (YOLOv8s): mAP@50=0.9727  mAP@50-95=0.7753  FPS=58.5   Size=21.47MB
+#   Student (YOLOv8n): mAP@50=0.9615  mAP@50-95=0.7366  FPS=120.9  Size=6.2MB
+#   Compression: 3.46× smaller, 2.07× faster
 
-teacher: yolov8s.pt          # path or model name
-student: yolov8n.pt          # smaller student
+teacher: yolov8s.pt          # 21.47 MB, 11.13M params
+student: yolov8n.pt          #  6.20 MB,  3.13M params
 
-data: data/pest.yaml         # YOLO dataset YAML
+data: configs/pest_detection.yaml   # update to your dataset YAML path
+
+# Dataset
+nc: 2
+names:
+  0: Aspilanta
+  1: eu_moth
 
 # Training
-epochs: 50
+epochs: 30
 lr: 0.0001
-batch: 8
+batch: 16
 imgsz: 640
-device: cpu                  # 'cpu' | 'cuda' | '0'
+device: "0"                  # 'cpu' | '0' (GPU)
 
 # Loss weights
 lambda_det: 1.0              # supervised detection loss weight
 lambda_kd: 0.5               # knowledge distillation loss weight
-temperature: 4.0             # soft-label KD temperature
+temperature: 4.0             # soft-label KD temperature (Hinton 2015)
 
 # Quantization
 ptq_calibration_batches: 50
-qat_epochs: 10
-qat_lr_factor: 0.1           # QAT LR = lr * qat_lr_factor
 quant_backend: fbgemm         # 'fbgemm' (x86) or 'qnnpack' (ARM/edge)
+# Note: QAT skipped (--skip-qat) — per_channel_affine incompatibility
+# on PyTorch 2.x + CUDA. PTQ used instead.
 
 # Export
 export_onnx: true
-onnx_opset: 17
-onnx_input_shape: [1, 3, 640, 640]
+onnx_opset: 18               # opset 18 — Ultralytics default, TensorRT-compatible
 
 # Output
 out_dir: runs/distill_pest

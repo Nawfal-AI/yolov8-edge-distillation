@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Large binary weight files — download from Releases page instead
+# Remove these lines if you set up Git LFS
+weights/*.pt
+weights/*.onnx
+
+# Training run outputs
+runs/
+
+# Kaggle notebook checkpoints
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
