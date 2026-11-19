@@ -1,16 +1,15 @@
-# Core
-ultralytics>=8.1.0
-torch>=2.0.0
-torchvision>=0.15.0
+# Core — install these first
+# torch and torchvision need a platform-specific index URL:
+# pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
 numpy>=1.24.0
 PyYAML>=6.0
-
-# Benchmarking
 torchmetrics>=1.0.0
-
-# ONNX export
 onnx>=1.14.0
 onnxruntime>=1.16.0
+
+# Full training pipeline (optional)
+# pip install -e ".[train]"
+# ultralytics>=8.1.0
 
 # Dev / testing
 pytest>=7.0

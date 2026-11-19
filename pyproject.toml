@@ -9,10 +9,6 @@ description = "Knowledge distillation + INT8 quantization pipeline for YOLOv8 ed
 readme = "README.md"
 requires-python = ">=3.9"
 license = {text = "MIT"}
-
-# Core deps only — torch/torchvision intentionally excluded here
-# because they require platform-specific index URLs.
-# Install separately: pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
 dependencies = [
     "numpy>=1.24.0",
     "PyYAML>=6.0",
@@ -22,7 +18,6 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-# Full training pipeline — includes Ultralytics for YOLO model management
 train = [
     "ultralytics>=8.1.0",
     "torch>=2.0.0",
@@ -32,6 +27,7 @@ dev = ["pytest>=7.0", "black", "ruff"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
+include = ["distill*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
